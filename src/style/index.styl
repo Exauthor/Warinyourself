@@ -4,18 +4,7 @@ body
   margin 0
   height 100vh
   overflow hidden
-
-.main-title
-  color white
-  font-size 4rem
-  font-weight 1000
-  text-align center
-  font-family sans-serif
   text-transform uppercase
-  background linear-gradient(90deg, blue, yellow)
-  background-clip text
-  -webkit-background-clip text
-  -webkit-text-fill-color transparent
 
 .home
   height 100vh
@@ -25,9 +14,12 @@ body
   justify-content center
 
 .title
-  font-size 9rem
-  width 4em
+  font-size 15rem
+  width 14ch
   clip-path: url(#cut-off-bottom)
+  display flex
+  align-items center
+  justify-content center
 
 .svg-title
   position absolute
@@ -47,7 +39,27 @@ body
 
 .title-video
   display block
+  position relative
   width 100%
+
+.center
+  position absolute
+  width 30px
+  height 30px
+  border-radius 50%
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  background white
+  z-index 10
+
+@media screen and (max-width 1200px)
+  .title
+    font-size 12rem
+
+@media screen and (max-width 920px)
+  .title
+    font-size 7rem
 
 @media screen and (max-width 660px)
   .title

@@ -1,45 +1,4 @@
-<template>
-  <div class="home">
-    <div class="title" :key="activeTitle.video" ref="scene">
-      <video
-        class="title-video"
-        autoplay
-        loop
-        muted
-        :style="activeTitle.videoStyle || {}"
-      >
-        <source
-          :src="require(`./assets/${activeTitle.video}.mp4`)"
-          type="video/mp4"
-        />
-        Your browser does not support the video tag.
-      </video>
-      <svg
-        :viewBox="`0 0 ${width} ${height}`"
-        class="svg-title"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <clipPath id="cut-off-bottom">
-            <text
-              :y="height * (activeTitle.offsetY || 0.65)"
-              class="title-text"
-              fill="white"
-              xml:space="preserve"
-            >
-              <tspan text-anchor="middle" :style="activeTitle.style">
-                {{ activeTitle.text }}
-              </tspan>
-            </text>
-          </clipPath>
-        </defs>
-      </svg>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-import { onMounted, ref } from "vue";
+import { h, onMounted, ref } from "vue";
 
 export default {
   setup() {
@@ -149,6 +108,7 @@ export default {
       if (scene.value != null) {
         const bound = scene.value.getBoundingClientRect();
         [height.value, width.value] = [bound.height, bound.width];
+        console.log({ height: height.value })
 
         window.addEventListener("resize", () => {
           setTimeout(() => {
@@ -184,7 +144,42 @@ export default {
       }
     });
 
-    return { scene, height, width, activeTitle };
-  }
+    return () => <div class="home">
+      <div class="title" key={activeTitle.value.video} ref={scene}>
+        <video
+          class="title-video"
+          autoplay
+          loop
+          muted
+          style={activeTitle.value.videoStyle || {}}
+        >
+          <source
+            src={require(`./assets/${activeTitle.value.video}.mp4`)}
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+        <svg
+          viewBox={`0 0 ${width.value} ${height.value}`}
+          class="svg-title"
+          xmlns="http://www.w3.org/2000/svg"
+
+        >
+          <defs>
+            <clipPath id="cut-off-bottom">
+              <text
+                y={height.value * (activeTitle.value.offsetY || 0.65)}
+                class="title-text"
+                fill="white"
+              >
+                <tspan text-anchor="middle" style={activeTitle.value.style}>
+                  { activeTitle.value.text }
+                </tspan>
+              </text>
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  },
 };
-</script>
